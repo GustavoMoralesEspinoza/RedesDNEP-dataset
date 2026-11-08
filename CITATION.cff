@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Si usa estos datos, cite esta base de datos y la tesis de origen."
+title: "Redes de prueba para el planeamiento de la expansión de redes de distribución (DNEP)"
+type: dataset
+authors:
+  - family-names: "Morales Espinoza"
+    given-names: "Gustavo"
+references:
+  - type: thesis
+    title: "Algoritmo genético especializado aplicado ao planejamento da expansão de sistemas de distribuição de energia elétrica"
+    authors:
+      - family-names: "Camargo"
+        given-names: "Vera Lúcia Vieira de"
+    year: 2014
+    thesis-type: "Tese (Doutorado em Engenharia Elétrica)"
+    institution:
+      name: "Universidade Estadual Paulista (UNESP), Faculdade de Engenharia de Ilha Solteira"

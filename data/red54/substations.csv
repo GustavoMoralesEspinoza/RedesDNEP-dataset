@@ -1,0 +1,9 @@
+bus,status,cap_MVA,option,cap_new_MVA,cost
+51,existing,16.7,0,16.7,0.0
+51,existing,16.7,1,33.4,1000000.0
+52,existing,16.7,0,16.7,0.0
+52,existing,16.7,1,33.4,1000000.0
+53,candidate,0.0,1,22.0,2000000.0
+53,candidate,0.0,2,30.0,3000000.0
+54,candidate,0.0,1,22.0,2400000.0
+54,candidate,0.0,2,30.0,3400000.0

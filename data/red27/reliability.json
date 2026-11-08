@@ -1,0 +1,9 @@
+{
+  "failure_rate_per_year": 0.4,
+  "repair_time_h": 2.0,
+  "switching_time_h": 0.25,
+  "DIC_max_h": 4.0,
+  "FIC_max": 4.0,
+  "DEC_max_h": 2.0,
+  "FEC_max": 2.0
+}

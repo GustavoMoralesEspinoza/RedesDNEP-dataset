@@ -1,0 +1,17 @@
+{
+  "name": "red27",
+  "source": "Camargo (2014), Secciones 6.3.1 y 6.3.1.2, Tabla 16, Figura 42; Anexo E, Tablas 49-53",
+  "V_kV": 13.8,
+  "stages": 3,
+  "years_per_stage": 1,
+  "V_min_pu": 0.95,
+  "V_max_pu": 1.05,
+  "interest_rate": 0.1,
+  "loss_factor": 0.35,
+  "energy_cost_per_kWh": 0.1,
+  "power_factor": 0.9,
+  "currency": "US$",
+  "V_source_pu": 1.05,
+  "se_operation_cost_per_kVA2h": 1e-08,
+  "line_model": "per_circuit"
+}

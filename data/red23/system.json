@@ -1,0 +1,14 @@
+{
+  "name": "red23",
+  "source": "Camargo (2014), Sección 6.1.1 (Teste 1); Anexo A, Tablas 27-30; Figura 27",
+  "V_kV": 34.5,
+  "stages": 1,
+  "years_per_stage": 20,
+  "V_min_pu": 0.97,
+  "V_max_pu": 1.03,
+  "interest_rate": 0.1,
+  "loss_factor": 0.35,
+  "energy_cost_per_kWh": 0.05,
+  "power_factor": 0.9,
+  "currency": "US$"
+}
