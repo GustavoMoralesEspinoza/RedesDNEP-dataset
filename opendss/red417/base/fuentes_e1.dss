@@ -1,0 +1,2 @@
+New Circuit.red417 bus1=b415 basekv=10.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 415, opción 0, 40.0 MVA
+New Vsource.SE417 bus1=b417 basekv=10.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 417, opción 0, 40.0 MVA

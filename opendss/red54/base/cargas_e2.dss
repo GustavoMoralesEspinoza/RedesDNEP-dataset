@@ -1,0 +1,16 @@
+New Load.LD1 bus1=b1 phases=3 kV=15.0 kW=3420.0 kvar=1900.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD2 bus1=b2 phases=3 kV=15.0 kW=1170.0 kvar=650.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD3 bus1=b3 phases=3 kV=15.0 kW=450.0 kvar=250.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD4 bus1=b4 phases=3 kV=15.0 kW=1710.0 kvar=950.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD5 bus1=b5 phases=3 kV=15.0 kW=2070.0 kvar=1150.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD6 bus1=b6 phases=3 kV=15.0 kW=630.0 kvar=350.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD7 bus1=b7 phases=3 kV=15.0 kW=450.0 kvar=250.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD8 bus1=b8 phases=3 kV=15.0 kW=1530.0 kvar=850.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD9 bus1=b9 phases=3 kV=15.0 kW=1800.0 kvar=1000.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD10 bus1=b10 phases=3 kV=15.0 kW=2160.0 kvar=1200.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD11 bus1=b11 phases=3 kV=15.0 kW=270.0 kvar=150.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD12 bus1=b12 phases=3 kV=15.0 kW=1440.0 kvar=800.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD13 bus1=b13 phases=3 kV=15.0 kW=900.0 kvar=500.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD14 bus1=b14 phases=3 kV=15.0 kW=810.0 kvar=450.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD15 bus1=b15 phases=3 kV=15.0 kW=1080.0 kvar=600.0 model=1 vminpu=0.7 vmaxpu=1.3
+New Load.LD16 bus1=b16 phases=3 kV=15.0 kW=1350.0 kvar=750.0 model=1 vminpu=0.7 vmaxpu=1.3

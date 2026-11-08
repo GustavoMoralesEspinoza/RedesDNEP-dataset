@@ -1,0 +1,4 @@
+New Circuit.red54 bus1=b51 basekv=15.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 51, opción 0, 16.7 MVA
+New Vsource.SE52 bus1=b52 basekv=15.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 52, opción 0, 16.7 MVA
+New Vsource.SE53 bus1=b53 basekv=15.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 53, opción 1, 22.0 MVA
+New Vsource.SE54 bus1=b54 basekv=15.0 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 54, opción 1, 22.0 MVA

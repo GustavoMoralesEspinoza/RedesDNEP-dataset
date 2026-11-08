@@ -30,3 +30,23 @@ Sistema propuesto por Bernal-Agustín (1998) y usado por Baquero (2012).
 Valor presente total 4 060,29 ×10³ R$ (el mejor resultado de la literatura citado en la tesis es 4,35 % menor);
 construcción de la SE 416 en la etapa 1; pérdidas por etapa 250,22 / 460,68 / 688,44 kW;
 tensión mínima 0,964 / 0,953 / 0,950 pu.
+
+## Solución de referencia y validación en OpenDSS
+
+![red417 — caso 0 y solución de Camargo](../../figuras/solucion_camargo/red417.png)
+
+Primer panel: **caso 0** (red inicial; en rojo las cargas que no alcanza). Siguientes: solución de Camargo por etapa (color = conductor, halo amarillo = obra de la etapa, rojo discontinuo = línea abierta).
+
+La solución está en [`solution_camargo/`](solution_camargo/) (Camargo (2014), Sec. 6.2.2, Tablas 11 y 12). Simulada en OpenDSS ([`opendss/red417/`](../../opendss/red417/)) con tensión de fuente **1.00 pu**, sin modificar cargas ni impedancias:
+
+| Etapa | Pérdidas OpenDSS (kW) | Tesis (kW) | Vmin OpenDSS (pu) | Tesis (pu) |
+|---|---|---|---|---|
+| 1 | 250.22 | 250.22 | 0.9639 | 0.964 |
+| 2 | 460.67 | 460.68 | 0.9529 | 0.953 |
+| 3 | 688.41 | 688.44 | 0.9500 | 0.95 |
+
+Observaciones:
+
+- **La red inicial no es radial:** las líneas existentes forman 2 lazos ({128, 132, 136, 140, 144} y {131, 135, 139, 143, 147, 196, 200, 204, 208, 220, 224, 228, 445, 449}). La solución abre L136 y L445 en la etapa 1. El modelo de planeamiento debe permitir abrir líneas existentes; si exige radialidad desde el caso 0, la red inicial es infactible tal cual.
+- La solución también abre circuitos en etapas posteriores (8 / 17 / 28 líneas abiertas acumuladas por etapa).
+- La «SE1» de la tesis es la barra 415 y la «SE3» la 417. En la etapa 3 la SE 416 opera al 99,9 % (7,99 de 8 MVA) y la tensión mínima queda justo en el límite (0,950 pu).

@@ -1,0 +1,5 @@
+! Conductores de red417 (data/red417/conductors.csv)
+New Linecode.C1 nphases=3 units=km r1=0.3655 x1=0.252 r0=0.3655 x0=0.252 c1=0 c0=0 normamps=200.0 emergamps=200.0
+New Linecode.C2 nphases=3 units=km r1=0.2921 x1=0.2466 r0=0.2921 x0=0.2466 c1=0 c0=0 normamps=300.0 emergamps=300.0
+New Linecode.C3 nphases=3 units=km r1=0.2359 x1=0.2402 r0=0.2359 x0=0.2402 c1=0 c0=0 normamps=400.0 emergamps=400.0
+New Linecode.C4 nphases=3 units=km r1=0.1932 x1=0.2279 r0=0.1932 x0=0.2279 c1=0 c0=0 normamps=500.0 emergamps=500.0

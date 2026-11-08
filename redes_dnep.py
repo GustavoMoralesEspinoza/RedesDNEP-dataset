@@ -11,6 +11,7 @@ Uso rápido:
 
     net.hourly_loads(stage=3)           # carga de cada barra en las 24 h (curvas estándar)
     net.lines_with_impedance()          # R y X en ohm de cada corredor según su conductor
+    lines, subs = net.topology(stage=2, case="camargo")   # solución de la tesis en la etapa 2
     rd.export_excel("red54", "red54.xlsx")      # una hoja por tabla (requiere openpyxl)
     rd.export_sqlite("redes.sqlite")            # todas las redes en una base SQLite
 
@@ -47,6 +48,7 @@ class Network:
     line_costs: Optional[pd.DataFrame] = None
     consumers: Optional[pd.DataFrame] = None
     reliability: Optional[dict] = None
+    solution: Optional[dict] = None
     _curves: Optional[pd.DataFrame] = field(default=None, repr=False)
 
     # ------------------------------------------------------------------ vistas
@@ -111,6 +113,36 @@ class Network:
         ln["X_ohm"] = ln.X_ohm_km * ln.length_km
         return ln
 
+    def topology(self, stage: int = 1, case: str = "camargo") -> tuple[pd.DataFrame, pd.DataFrame]:
+        """Topología de una etapa: (líneas en servicio con su conductor, SE activas con su capacidad).
+
+        case = "base"    -> caso 0: solo circuitos y SE existentes (opción 0); `stage` no cambia la red.
+        case = "camargo" -> solución publicada en la tesis (data/<red>/solution_camargo/).
+        Cada línea devuelta lleva `state`: existente | recondutorada | nueva.
+        """
+        self._check_stage(stage)
+        ln, ss = self.lines, self.substations
+        if case == "base":
+            act = ln[ln.status == "existing"].copy()
+            se = ss[(ss.status == "existing") & (ss.option == 0)]
+        elif case == "camargo":
+            if self.solution is None:
+                raise ValueError(f"{self.name} no tiene solución de referencia")
+            top = self.solution["lines"]
+            top = top[(top.stage == stage) & (top.conductor > 0)][["line", "conductor"]]
+            act = ln.rename(columns={"conductor": "conductor_original"}).merge(top, on="line")
+            sel = self.solution["substations"]
+            se = ss.merge(sel[sel.stage == stage][["bus", "option"]], on=["bus", "option"])
+        else:
+            raise ValueError("case debe ser 'base' o 'camargo'")
+        if "conductor_original" not in act:
+            act["conductor_original"] = act.conductor
+        act["state"] = "nueva"
+        act.loc[(act.status == "existing") & (act.conductor == act.conductor_original), "state"] = "existente"
+        act.loc[(act.status == "existing") & (act.conductor != act.conductor_original), "state"] = "recondutorada"
+        cols = ["line", "from", "to", "length_km", "status", "conductor_original", "conductor", "state"]
+        return act[cols].reset_index(drop=True), se.reset_index(drop=True)
+
     def _check_stage(self, stage: int) -> None:
         if not 1 <= stage <= self.system["stages"]:
             raise ValueError(f"{self.name} tiene etapas 1..{self.system['stages']}")
@@ -140,6 +172,11 @@ def load_network(name: str) -> Network:
         kw[t] = pd.read_csv(p) if p.exists() else None
     rel = d / "reliability.json"
     kw["reliability"] = json.loads(rel.read_text(encoding="utf-8")) if rel.exists() else None
+    sol = d / "solution_camargo"
+    if sol.exists():
+        kw["solution"] = {"lines": pd.read_csv(sol / "lines.csv"),
+                          "substations": pd.read_csv(sol / "substations.csv"),
+                          "reference": json.loads((sol / "reference.json").read_text(encoding="utf-8"))}
     return Network(**kw)
 
 

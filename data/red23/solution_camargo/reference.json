@@ -1,0 +1,28 @@
+{
+  "source": "Camargo (2014), Sec. 6.1.1.1 (Teste 1), Tabla 1, Figura 28",
+  "stages": [
+    1
+  ],
+  "losses_kW": [
+    15.49
+  ],
+  "vmin_pu": [
+    1.024
+  ],
+  "substation_MVA": {
+    "1": [
+      7.06
+    ]
+  },
+  "v_source_pu_thesis": null,
+  "v_source_pu_opendss": 1.03,
+  "opendss_validation": {
+    "1": {
+      "losses_kW": 15.491,
+      "vmin_pu": 1.0239,
+      "substation_MVA": {
+        "1": 7.059
+      }
+    }
+  }
+}

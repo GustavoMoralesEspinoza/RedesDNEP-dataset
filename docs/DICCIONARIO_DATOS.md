@@ -108,6 +108,46 @@ Tasa de fallas por circuito (`failure_rate_per_year`), tiempo de reparación (`r
 tiempo de reconfiguración (`switching_time_h`) y límites regulatorios de los índices de continuidad:
 `DIC_max_h`, `FIC_max` (por consumidor) y `DEC_max_h`, `FEC_max` (por alimentador).
 
+## Solución de referencia: `data/<red>/solution_camargo/`
+
+Solución publicada por Camargo (2014) para cada red, tal como se simula en `opendss/<red>/camargo/`.
+
+### `lines.csv` — conductor de cada corredor por etapa
+| Columna | Tipo | Descripción |
+|---|---|---|
+| `line` | int | corredor (`lines.csv` de la red) |
+| `stage` | int | etapa |
+| `conductor` | int | tipo de conductor en servicio en esa etapa; **0 = no construido o abierto** |
+
+Estado derivado (`Network.topology`): `existente` (existing con su conductor original), `recondutorada`
+(existing con otro conductor), `nueva` (candidate construida). Un corredor con `conductor = 0` que estuvo en
+servicio antes (o era existing) está **abierto**.
+
+### `substations.csv` — subestaciones activas por etapa
+| Columna | Tipo | Descripción |
+|---|---|---|
+| `bus` | int | barra de la SE |
+| `stage` | int | etapa |
+| `option` | int | alternativa activa (`substations.csv` de la red); 0 = configuración existente |
+
+### `reference.json` — resultados publicados y validación
+| Clave | Descripción |
+|---|---|
+| `source` | sección y tablas de la tesis |
+| `stages`, `losses_kW`, `vmin_pu` | pérdidas (kW) y tensión mínima (pu) publicadas por etapa |
+| `substation_MVA` | potencia de cada SE por etapa (null si la tesis no la informa) |
+| `v_source_pu_thesis` | tensión de la fuente informada en la tesis (null si no la informa) |
+| `v_source_pu_opendss` | tensión de la fuente con la que OpenDSS reproduce los resultados |
+| `opendss_validation` | pérdidas, Vmin y MVA de cada SE obtenidos en OpenDSS por etapa |
+
+## Modelos OpenDSS: `opendss/<red>/<caso>/`
+
+`caso` = `base` (caso 0, red inicial) o `camargo`. Por etapa `s`: `master_e{s}.dss` (compila y resuelve),
+`fuentes_e{s}.dss`, `lineas_e{s}.dss`, `cargas_e{s}.dss`, `no_energizadas_e{s}.csv` (cargas sin camino a una SE,
+no simuladas); comunes: `linecodes.dss`, `buscoords.csv`. Barras `b<número>`; líneas `L<line>`; cargas `LD<bus>`;
+la primera SE es la fuente del circuito y las demás `Vsource.SE<bus>`. Se regeneran con
+`python redes_dnep_opendss.py`.
+
 ## Archivo compartido: `data/load_curves.csv`
 
 Curvas de 24 h en p.u. del pico (máximo = 1.0) para las clases `res`, `com` e `ind`.

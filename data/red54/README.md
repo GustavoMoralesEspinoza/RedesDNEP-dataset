@@ -29,3 +29,23 @@ Sistema propuesto por Miranda, Ranito y Proença (1994) y adaptado por Baquero (
 Valor presente total 7 191,11 ×10³ R$ (Baquero 2012: 7 228,00 ×10³ R$); construcción de la SE 54
 en la etapa 1 y de la SE 53 en la etapa 2; pérdidas por etapa 679,53 / 837,10 / 1340,88 kW;
 tensión mínima 0,952 / 0,958 / 0,951 pu.
+
+## Solución de referencia y validación en OpenDSS
+
+![red54 — caso 0 y solución de Camargo](../../figuras/solucion_camargo/red54.png)
+
+Primer panel: **caso 0** (red inicial; en rojo las cargas que no alcanza). Siguientes: solución de Camargo por etapa (color = conductor, halo amarillo = obra de la etapa, rojo discontinuo = línea abierta).
+
+La solución está en [`solution_camargo/`](solution_camargo/) (Camargo (2014), Sec. 6.2.1, Tablas 6 y 7). Simulada en OpenDSS ([`opendss/red54/`](../../opendss/red54/)) con tensión de fuente **1.00 pu**, sin modificar cargas ni impedancias:
+
+| Etapa | Pérdidas OpenDSS (kW) | Tesis (kW) | Vmin OpenDSS (pu) | Tesis (pu) |
+|---|---|---|---|---|
+| 1 | 679.53 | 679.53 | 0.9525 | 0.952 |
+| 2 | 837.11 | 837.1 | 0.9583 | 0.958 |
+| 3 | 1340.88 | 1340.88 | 0.9514 | 0.951 |
+
+Observaciones:
+
+- **Reconfiguración:** al entrar la SE 53 (etapa 2) la solución **abre 4 líneas** (L5, L13, L45, L59) y transfiere esas cargas. Un modelo que no permita abrir circuitos no puede reproducir esta solución.
+- **Demanda decreciente** entre etapas en las barras 4, 9, 24 y 49 (así viene en la tesis).
+- Caso 0: la red inicial deja 24 barras (15,4 MW) sin alimentación en la etapa 1 y sobrecarga 4 líneas.

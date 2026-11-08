@@ -1,0 +1,12 @@
+Clear
+! red54 - caso 'base', etapa 1. Generado por redes_dnep_opendss.py
+! Tensión de la fuente: pu=1.0 aquí; la que reproduce la tesis está en data/red54/solution_camargo/reference.json (v_source_pu_opendss).
+Redirect fuentes_e1.dss
+Redirect linecodes.dss
+Redirect lineas_e1.dss
+Redirect cargas_e1.dss
+Set voltagebases=[15.0]
+CalcVoltageBases
+Buscoords buscoords.csv
+Set maxiterations=100
+Solve

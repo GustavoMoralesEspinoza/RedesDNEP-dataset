@@ -1,0 +1,58 @@
+{
+  "source": "Camargo (2014), Sec. 6.3.1.1 (Caso I), Tablas 16 y 17",
+  "stages": [
+    1,
+    2,
+    3
+  ],
+  "losses_kW": [
+    184,
+    387,
+    1134
+  ],
+  "vmin_pu": [
+    1.007,
+    0.992,
+    0.963
+  ],
+  "substation_MVA": {
+    "25": [
+      7.35,
+      12.32,
+      23.85
+    ],
+    "26": [
+      6.11,
+      8.63,
+      14.96
+    ]
+  },
+  "v_source_pu_thesis": 1.05,
+  "v_source_pu_opendss": 1.05,
+  "opendss_validation": {
+    "1": {
+      "losses_kW": 184.54,
+      "vmin_pu": 1.007,
+      "substation_MVA": {
+        "25": 7.355,
+        "26": 6.111
+      }
+    },
+    "2": {
+      "losses_kW": 386.98,
+      "vmin_pu": 0.9917,
+      "substation_MVA": {
+        "25": 12.321,
+        "26": 8.632
+      }
+    },
+    "3": {
+      "losses_kW": 1134.35,
+      "vmin_pu": 0.9635,
+      "substation_MVA": {
+        "25": 23.851,
+        "26": 14.957
+      }
+    }
+  }
+}

@@ -1,2 +1,4 @@
 pandas>=1.5
-openpyxl>=3.0  # opcional: solo para export_excel
+networkx>=2.6           # topología / redes_dnep_opendss
+openpyxl>=3.0           # opcional: solo para export_excel
+py-dss-interface>=2.0   # opcional: flujo de potencia en OpenDSS (Windows)

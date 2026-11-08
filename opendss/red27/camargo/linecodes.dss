@@ -1,0 +1,4 @@
+! Conductores de red27 (data/red27/conductors.csv)
+New Linecode.C1 nphases=3 units=km r1=0.76 x1=0.6499 r0=0.76 x0=0.6499 c1=0 c0=0 normamps=434.7826 emergamps=434.7826
+New Linecode.C2 nphases=3 units=km r1=0.44 x1=0.5444 r0=0.44 x0=0.5444 c1=0 c0=0 normamps=695.6525 emergamps=695.6525
+New Linecode.C3 nphases=3 units=km r1=0.25 x1=0.433 r0=0.25 x0=0.433 c1=0 c0=0 normamps=869.5652 emergamps=869.5652

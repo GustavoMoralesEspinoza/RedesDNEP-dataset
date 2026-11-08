@@ -1,0 +1,2 @@
+New Circuit.red27 bus1=b25 basekv=13.8 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 25, opción 2, 27.0 MVA
+New Vsource.SE26 bus1=b26 basekv=13.8 pu=1.0 phases=3 angle=0 MVAsc3=1000000 MVAsc1=1000000  ! SE 26, opción 0, 15.0 MVA

@@ -27,3 +27,20 @@ Sistema original de Oliveira (2010); usado también por Gomez et al. (2004), Nah
 ## Resultado de referencia (Camargo 2014, Teste 1)
 Costo total 171 353 US$ (circuitos 151 136 + pérdidas 20 217); pérdidas 15,49 kW; tensión mínima 1,024 pu;
 todos los circuitos con conductor tipo 1.
+
+## Solución de referencia y validación en OpenDSS
+
+![red23 — caso 0 y solución de Camargo](../../figuras/solucion_camargo/red23.png)
+
+Primer panel: **caso 0** (red inicial; en rojo las cargas que no alcanza). Siguientes: solución de Camargo por etapa (color = conductor, halo amarillo = obra de la etapa, rojo discontinuo = línea abierta).
+
+La solución está en [`solution_camargo/`](solution_camargo/) (Camargo (2014), Sec. 6.1.1.1 (Teste 1), Tabla 1, Figura 28). Simulada en OpenDSS ([`opendss/red23/`](../../opendss/red23/)) con tensión de fuente **1.03 pu**, sin modificar cargas ni impedancias:
+
+| Etapa | Pérdidas OpenDSS (kW) | Tesis (kW) | Vmin OpenDSS (pu) | Tesis (pu) |
+|---|---|---|---|---|
+| 1 | 15.49 | 15.49 | 1.0239 | 1.024 |
+
+Observaciones:
+
+- La tesis no informa la tensión de la fuente; 1,03 pu coincide con el límite superior de la red (desvío máx. 3 %) y es la única zona (1,030–1,035 pu) donde pérdidas y Vmin cuadran a la vez.
+- La barra 2 (de paso) queda sin conectar en la solución: no tiene carga, es correcto.
