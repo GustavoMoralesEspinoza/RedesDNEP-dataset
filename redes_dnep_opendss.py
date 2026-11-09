@@ -2,19 +2,20 @@
 
     import redes_dnep_opendss as rdo
 
-    rdo.write_dss("red54", case="camargo")          # escribe opendss/red54/camargo/master_e{s}.dss
-    r = rdo.simulate("red54", case="camargo", stage=2)
+    rdo.write_dss("red54", case="reference")        # escribe opendss/red54/reference/master_e{s}.dss
+    r = rdo.simulate("red54", case="reference", stage=2)
     r["losses_kW"], r["vmin_pu"], r["sources"]       # resultados del flujo
 
     python redes_dnep_opendss.py            # regenera la carpeta opendss/ para todas las redes
 
 Casos:
   base     caso 0: red inicial (solo circuitos y SE existentes) con la demanda de la etapa indicada.
-  camargo  solución publicada en Camargo (2014) para cada etapa (data/<red>/solution_camargo/).
+  reference  solución publicada para cada etapa (data/<red>/reference_solution/): Camargo (2014);
+             red18: Morales (2024). Se acepta "camargo" como alias.
 
 Modelo: equivalente trifásico balanceado; cada SE activa es un Vsource rígido; líneas con R1 = R0 y
 X1 = X0 del conductor, sin capacitancia, normamps = Imax; cargas de potencia constante (model=1) en el
-pico de la etapa. Solo se modela la parte conectada a alguna SE activa: las cargas sin alimentación se
+pico de la etapa (red18: corriente constante, model=5, porque la fuente da las demandas en A). Solo se modela la parte conectada a alguna SE activa: las cargas sin alimentación se
 informan en `unserved_loads` (y en no_energizadas_e{s}.csv).
 
 Escribir los .dss solo requiere pandas y networkx; `simulate` requiere py-dss-interface (Windows).
@@ -31,7 +32,7 @@ import redes_dnep as rd
 
 ROOT = Path(__file__).resolve().parent
 DSS_DIR = ROOT / "opendss"
-CASES = ("base", "camargo")
+CASES = ("base", "reference")
 
 
 def _b(n: int) -> str:
@@ -46,12 +47,14 @@ def _energized(lines: pd.DataFrame, sources) -> set:
     return set().union(*(nx.node_connected_component(g, n) for n in sources))
 
 
-def write_dss(name: str, case: str = "camargo", out_dir: str | Path | None = None) -> Path:
+def write_dss(name: str, case: str = "reference", out_dir: str | Path | None = None) -> Path:
     """Escribe los archivos .dss de una red y un caso (todas las etapas). Devuelve la carpeta."""
+    case = "reference" if case == "camargo" else case
     if case not in CASES:
         raise ValueError(f"case debe ser uno de {CASES}")
     net = rd.load_network(name)
     kv = net.system["V_kV"]
+    model = 5 if net.system.get("load_model") == "constant_current" else 1
     out = Path(out_dir) if out_dir else DSS_DIR / name / case
     out.mkdir(parents=True, exist_ok=True)
 
@@ -82,11 +85,11 @@ def write_dss(name: str, case: str = "camargo", out_dir: str | Path | None = Non
         with open(out / f"cargas_e{s}.dss", "w", encoding="utf-8") as f:
             for r in ld.itertuples():
                 f.write(f"New Load.LD{r.bus} bus1={_b(r.bus)} phases=3 kV={kv} kW={r.P_kW} kvar={r.Q_kvar} "
-                        f"model=1 vminpu=0.7 vmaxpu=1.3\n")
+                        f"model={model} vminpu=0.7 vmaxpu=1.3\n")
         with open(out / f"master_e{s}.dss", "w", encoding="utf-8") as f:
             f.write(f"Clear\n! {name} - caso '{case}', etapa {s}. Generado por redes_dnep_opendss.py\n"
                     f"! Tensión de la fuente: pu=1.0 aquí; la que reproduce la tesis está en "
-                    f"data/{name}/solution_camargo/reference.json (v_source_pu_opendss).\n"
+                    f"data/{name}/reference_solution/reference.json (v_source_pu_opendss).\n"
                     f"Redirect fuentes_e{s}.dss\nRedirect linecodes.dss\nRedirect lineas_e{s}.dss\n"
                     f"Redirect cargas_e{s}.dss\nSet voltagebases=[{kv}]\nCalcVoltageBases\n"
                     f"Buscoords buscoords.csv\nSet maxiterations=100\nSolve\n")
@@ -103,7 +106,7 @@ def _names(lst) -> list[str]:
     return [n for n in lst if n and n.upper() != "NONE"]
 
 
-def simulate(name: str, case: str = "camargo", stage: int = 1, v_source_pu: float | None = None) -> dict:
+def simulate(name: str, case: str = "reference", stage: int = 1, v_source_pu: float | None = None) -> dict:
     """Flujo de potencia de una red, caso y etapa. Requiere py-dss-interface.
 
     v_source_pu: tensión de todas las SE; por defecto la ajustada contra la tesis (v_source_fitted).
@@ -113,6 +116,7 @@ def simulate(name: str, case: str = "camargo", stage: int = 1, v_source_pu: floa
     """
     import py_dss_interface
 
+    case = "reference" if case == "camargo" else case
     out = write_dss(name, case)
     master = os.path.abspath(out / f"master_e{stage}.dss")
     if not os.path.isfile(master):

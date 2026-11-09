@@ -1,0 +1,4 @@
+! Conductores de red18 (data/red18/conductors.csv)
+New Linecode.C1 nphases=3 units=km r1=1.0 x1=0.0 r0=1.0 x0=0.0 c1=0 c0=0 normamps=250.0 emergamps=250.0
+New Linecode.C2 nphases=3 units=km r1=0.7 x1=0.0 r0=0.7 x0=0.0 c1=0 c0=0 normamps=400.0 emergamps=400.0
+New Linecode.C3 nphases=3 units=km r1=0.5 x1=0.0 r0=0.5 x0=0.0 c1=0 c0=0 normamps=500.0 emergamps=500.0

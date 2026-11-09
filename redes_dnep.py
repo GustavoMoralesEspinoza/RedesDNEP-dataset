@@ -11,7 +11,7 @@ Uso rápido:
 
     net.hourly_loads(stage=3)           # carga de cada barra en las 24 h (curvas estándar)
     net.lines_with_impedance()          # R y X en ohm de cada corredor según su conductor
-    lines, subs = net.topology(stage=2, case="camargo")   # solución de la tesis en la etapa 2
+    lines, subs = net.topology(stage=2)  # solución de referencia publicada, etapa 2
     rd.export_excel("red54", "red54.xlsx")      # una hoja por tabla (requiere openpyxl)
     rd.export_sqlite("redes.sqlite")            # todas las redes en una base SQLite
 
@@ -61,7 +61,8 @@ class Network:
     def summary(self) -> str:
         s, b, ln = self.system, self.buses, self.lines
         lines = [
-            f"{self.name}: {s['V_kV']} kV, {s['stages']} etapa(s) de {s['years_per_stage']} año(s), moneda {s['currency']}",
+            f"{self.name}: {s['V_kV']} kV, {s['stages']} etapa(s) de {s['years_per_stage']} año(s), moneda {s['currency']}"
+            + (f", demanda original en A (carga de corriente constante)" if s.get("load_model") == "constant_current" else ""),
             f"  barras: {len(b)} ({', '.join(f'{k}={v}' for k, v in b.type.value_counts().items())})",
             f"  corredores: {len(ln)} (existentes={int((ln.status == 'existing').sum())}, "
             f"candidatos={int((ln.status == 'candidate').sum())}), {ln.length_km.sum():.2f} km",
@@ -113,11 +114,12 @@ class Network:
         ln["X_ohm"] = ln.X_ohm_km * ln.length_km
         return ln
 
-    def topology(self, stage: int = 1, case: str = "camargo") -> tuple[pd.DataFrame, pd.DataFrame]:
+    def topology(self, stage: int = 1, case: str = "reference") -> tuple[pd.DataFrame, pd.DataFrame]:
         """Topología de una etapa: (líneas en servicio con su conductor, SE activas con su capacidad).
 
         case = "base"    -> caso 0: solo circuitos y SE existentes (opción 0); `stage` no cambia la red.
-        case = "camargo" -> solución publicada en la tesis (data/<red>/solution_camargo/).
+        case = "reference" -> solución publicada (data/<red>/reference_solution/): Camargo (2014) o,
+                              en red18, Morales (2024). "camargo" se acepta como alias.
         Cada línea devuelta lleva `state`: existente | recondutorada | nueva.
         """
         self._check_stage(stage)
@@ -125,7 +127,7 @@ class Network:
         if case == "base":
             act = ln[ln.status == "existing"].copy()
             se = ss[(ss.status == "existing") & (ss.option == 0)]
-        elif case == "camargo":
+        elif case in ("reference", "camargo"):
             if self.solution is None:
                 raise ValueError(f"{self.name} no tiene solución de referencia")
             top = self.solution["lines"]
@@ -134,7 +136,7 @@ class Network:
             sel = self.solution["substations"]
             se = ss.merge(sel[sel.stage == stage][["bus", "option"]], on=["bus", "option"])
         else:
-            raise ValueError("case debe ser 'base' o 'camargo'")
+            raise ValueError("case debe ser 'base' o 'reference'")
         if "conductor_original" not in act:
             act["conductor_original"] = act.conductor
         act["state"] = "nueva"
@@ -172,7 +174,7 @@ def load_network(name: str) -> Network:
         kw[t] = pd.read_csv(p) if p.exists() else None
     rel = d / "reliability.json"
     kw["reliability"] = json.loads(rel.read_text(encoding="utf-8")) if rel.exists() else None
-    sol = d / "solution_camargo"
+    sol = d / "reference_solution"
     if sol.exists():
         kw["solution"] = {"lines": pd.read_csv(sol / "lines.csv"),
                           "substations": pd.read_csv(sol / "substations.csv"),

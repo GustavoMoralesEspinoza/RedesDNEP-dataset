@@ -1,0 +1,38 @@
+{
+  "name": "red18",
+  "source": "Morales (2024), Sec. 6.1, Fig. 15-16; Apêndice A, Tabelas 26-27",
+  "V_kV": 13.8,
+  "stages": 3,
+  "years_per_stage": [
+    1,
+    1,
+    2
+  ],
+  "V_min_pu": 0.95,
+  "V_max_pu": 1.05,
+  "interest_rate": 0.1,
+  "loss_factor": 1.0,
+  "energy_cost_per_kWh": 0.1,
+  "power_factor": 1.0,
+  "currency": "US$",
+  "line_model": "per_circuit",
+  "load_model": "constant_current",
+  "demand_unit_in_source": "A",
+  "se_capacity_A_by_stage": {
+    "17": [
+      500.0,
+      1000.0,
+      1000.0
+    ],
+    "18": [
+      500.0,
+      1000.0,
+      1000.0
+    ]
+  },
+  "pv_factor_by_stage": [
+    1.0,
+    0.9091,
+    0.8264
+  ]
+}

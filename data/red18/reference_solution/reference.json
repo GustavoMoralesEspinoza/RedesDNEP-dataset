@@ -1,0 +1,58 @@
+{
+  "source": "Morales (2024), Sec. 6.5.6, Tabela 18 (cenário 4) y Fig. 21",
+  "stages": [
+    1,
+    2,
+    3
+  ],
+  "losses_kW": [
+    252.76,
+    571.92,
+    887.37
+  ],
+  "vmin_pu": [
+    null,
+    null,
+    null
+  ],
+  "substation_MVA": null,
+  "v_source_pu_thesis": null,
+  "v_source_pu_opendss": 1.03,
+  "losses_cost_kUSD": [
+    221.42,
+    455.46,
+    642.39
+  ],
+  "investment_cost_kUSD": [
+    1.65,
+    1.29,
+    0.78
+  ],
+  "losses_kW_note": "La tesis publica el costo de pérdidas (CEle); losses_kW = CEle / (8760 h · 0,1 US$/kWh · δk), δ = 1 / 0,9091 / 0,8264. La tensión de la fuente no se publica: se adopta 1,03 pu (la solución cumple 0,95-1,05 pu con V entre 1,023 y 1,05).",
+  "opendss_validation": {
+    "1": {
+      "losses_kW": 251.251,
+      "vmin_pu": 0.99423,
+      "substation_MVA": {
+        "17": 6.155,
+        "18": 6.155
+      }
+    },
+    "2": {
+      "losses_kW": 568.497,
+      "vmin_pu": 0.9572,
+      "substation_MVA": {
+        "17": 9.848,
+        "18": 12.31
+      }
+    },
+    "3": {
+      "losses_kW": 881.997,
+      "vmin_pu": 0.9572,
+      "substation_MVA": {
+        "17": 12.31,
+        "18": 17.233
+      }
+    }
+  }
+}

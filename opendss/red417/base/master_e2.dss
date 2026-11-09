@@ -1,6 +1,6 @@
 Clear
 ! red417 - caso 'base', etapa 2. Generado por redes_dnep_opendss.py
-! Tensión de la fuente: pu=1.0 aquí; la que reproduce la tesis está en data/red417/solution_camargo/reference.json (v_source_pu_opendss).
+! Tensión de la fuente: pu=1.0 aquí; la que reproduce la tesis está en data/red417/reference_solution/reference.json (v_source_pu_opendss).
 Redirect fuentes_e2.dss
 Redirect linecodes.dss
 Redirect lineas_e2.dss

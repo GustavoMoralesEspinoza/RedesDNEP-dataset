@@ -108,9 +108,9 @@ Tasa de fallas por circuito (`failure_rate_per_year`), tiempo de reparación (`r
 tiempo de reconfiguración (`switching_time_h`) y límites regulatorios de los índices de continuidad:
 `DIC_max_h`, `FIC_max` (por consumidor) y `DEC_max_h`, `FEC_max` (por alimentador).
 
-## Solución de referencia: `data/<red>/solution_camargo/`
+## Solución de referencia: `data/<red>/reference_solution/`
 
-Solución publicada por Camargo (2014) para cada red, tal como se simula en `opendss/<red>/camargo/`.
+Solución publicada para cada red —Camargo (2014); red18: Morales (2024)—, tal como se simula en `opendss/<red>/reference/`.
 
 ### `lines.csv` — conductor de cada corredor por etapa
 | Columna | Tipo | Descripción |
@@ -139,10 +139,11 @@ servicio antes (o era existing) está **abierto**.
 | `v_source_pu_thesis` | tensión de la fuente informada en la tesis (null si no la informa) |
 | `v_source_pu_opendss` | tensión de la fuente con la que OpenDSS reproduce los resultados |
 | `opendss_validation` | pérdidas, Vmin y MVA de cada SE obtenidos en OpenDSS por etapa |
+| `losses_cost_kUSD`, `investment_cost_kUSD`, `losses_kW_note` | solo red18: costos publicados y cómo se derivan los kW |
 
 ## Modelos OpenDSS: `opendss/<red>/<caso>/`
 
-`caso` = `base` (caso 0, red inicial) o `camargo`. Por etapa `s`: `master_e{s}.dss` (compila y resuelve),
+`caso` = `base` (caso 0, red inicial) o `reference` (solución publicada). Por etapa `s`: `master_e{s}.dss` (compila y resuelve),
 `fuentes_e{s}.dss`, `lineas_e{s}.dss`, `cargas_e{s}.dss`, `no_energizadas_e{s}.csv` (cargas sin camino a una SE,
 no simuladas); comunes: `linecodes.dss`, `buscoords.csv`. Barras `b<número>`; líneas `L<line>`; cargas `LD<bus>`;
 la primera SE es la fuente del circuito y las demás `Vsource.SE<bus>`. Se regeneran con

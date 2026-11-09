@@ -33,11 +33,11 @@ tensión mínima 0,964 / 0,953 / 0,950 pu.
 
 ## Solución de referencia y validación en OpenDSS
 
-![red417 — caso 0 y solución de Camargo](../../figuras/solucion_camargo/red417.png)
+![red417 — caso 0 y solución de Camargo](../../figuras/solucion_referencia/red417.png)
 
 Primer panel: **caso 0** (red inicial; en rojo las cargas que no alcanza). Siguientes: solución de Camargo por etapa (color = conductor, halo amarillo = obra de la etapa, rojo discontinuo = línea abierta).
 
-La solución está en [`solution_camargo/`](solution_camargo/) (Camargo (2014), Sec. 6.2.2, Tablas 11 y 12). Simulada en OpenDSS ([`opendss/red417/`](../../opendss/red417/)) con tensión de fuente **1.00 pu**, sin modificar cargas ni impedancias:
+La solución está en [`reference_solution/`](reference_solution/) (Camargo (2014), Sec. 6.2.2, Tablas 11 y 12). Simulada en OpenDSS ([`opendss/red417/`](../../opendss/red417/)) con tensión de fuente **1.00 pu**, sin modificar cargas ni impedancias:
 
 | Etapa | Pérdidas OpenDSS (kW) | Tesis (kW) | Vmin OpenDSS (pu) | Tesis (pu) |
 |---|---|---|---|---|

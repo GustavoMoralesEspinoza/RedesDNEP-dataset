@@ -33,11 +33,11 @@ Valor presente total 3 190,87 ×10³ US$; ampliación de la SE 25 en la etapa 3;
 
 ## Solución de referencia y validación en OpenDSS
 
-![red27 — caso 0 y solución de Camargo](../../figuras/solucion_camargo/red27.png)
+![red27 — caso 0 y solución de Camargo](../../figuras/solucion_referencia/red27.png)
 
 Primer panel: **caso 0** (red inicial; en rojo las cargas que no alcanza). Siguientes: solución de Camargo por etapa (color = conductor, halo amarillo = obra de la etapa, rojo discontinuo = línea abierta).
 
-La solución está en [`solution_camargo/`](solution_camargo/) (Camargo (2014), Sec. 6.3.1.1 (Caso I), Tablas 16 y 17). Simulada en OpenDSS ([`opendss/red27/`](../../opendss/red27/)) con tensión de fuente **1.05 pu**, sin modificar cargas ni impedancias:
+La solución está en [`reference_solution/`](reference_solution/) (Camargo (2014), Sec. 6.3.1.1 (Caso I), Tablas 16 y 17). Simulada en OpenDSS ([`opendss/red27/`](../../opendss/red27/)) con tensión de fuente **1.05 pu**, sin modificar cargas ni impedancias:
 
 | Etapa | Pérdidas OpenDSS (kW) | Tesis (kW) | Vmin OpenDSS (pu) | Tesis (pu) |
 |---|---|---|---|---|

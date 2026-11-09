@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Si usa estos datos, cite esta base de datos y la tesis de origen."
+message: "Si usa estos datos, cite esta base de datos y el trabajo de origen de cada red."
 title: "Redes de prueba para el planeamiento de la expansión de redes de distribución (DNEP)"
 type: dataset
 authors:
@@ -15,3 +15,12 @@ references:
     thesis-type: "Tese (Doutorado em Engenharia Elétrica)"
     institution:
       name: "Universidade Estadual Paulista (UNESP), Faculdade de Engenharia de Ilha Solteira"
+  - type: thesis
+    title: "Planejamento de expansão de redes elétricas de distribuição considerando consumidores no ambiente da Indústria 4.0"
+    authors:
+      - family-names: "Morales Espinoza"
+        given-names: "Gustavo Lino"
+    year: 2024
+    thesis-type: "Dissertação (Mestrado em Engenharia Elétrica)"
+    institution:
+      name: "Universidade Estadual Paulista (UNESP), Instituto de Ciência e Tecnologia de Sorocaba"

@@ -1,4 +1,4 @@
-"""Reproduce en OpenDSS las pérdidas y la tensión mínima publicadas en Camargo (2014).
+"""Reproduce en OpenDSS las pérdidas y la tensión mínima publicadas (Camargo 2014; red18: Morales 2024).
 
     pip install py-dss-interface        (Windows)
     python examples/validar_opendss.py
@@ -22,13 +22,17 @@ print(f"{'red':7} {'etapa':>5} {'V pu':>6} {'pérdidas kW':>12} {'tesis':>9} {'e
 for name in rd.list_networks():
     ref = rd.load_network(name).solution["reference"]
     for k, stage in enumerate(ref["stages"]):
-        r = rdo.simulate(name, "camargo", stage)
+        r = rdo.simulate(name, "reference", stage)
         e_loss = 100 * (r["losses_kW"] - ref["losses_kW"][k]) / ref["losses_kW"][k]
-        e_v = r["vmin_pu"] - ref["vmin_pu"][k]
+        vref = ref["vmin_pu"][k]  # red18: la tesis no publica Vmin -> se exige cumplir los límites de la red
+        net_s = rd.load_network(name).system
+        e_v = (r["vmin_pu"] - vref) if vref is not None else 0.0
+        if vref is None and not (net_s["V_min_pu"] <= r["vmin_pu"] and r["vmax_pu"] <= net_s["V_max_pu"] + 1e-9):
+            e_v = 1.0
         ok = r["converged"] and abs(e_loss) <= 5 and abs(e_v) <= 0.005 and r["unserved_loads"].empty
         ok_total &= ok
         print(f"{name:7} {stage:>5} {r['v_source_pu']:>6.3f} {r['losses_kW']:>12.2f} {ref['losses_kW'][k]:>9.2f} "
-              f"{e_loss:>6.2f} {r['vmin_pu']:>8.4f} {ref['vmin_pu'][k]:>6.3f} {len(r['unserved_loads']):>11}  "
+              f"{e_loss:>6.2f} {r['vmin_pu']:>8.4f} {'  —' if ref['vmin_pu'][k] is None else format(ref['vmin_pu'][k], '6.3f'):>6} {len(r['unserved_loads']):>11}  "
               f"{'sí' if ok else 'NO'}")
 
 # Caso 0: la red inicial frente a la demanda de cada etapa
